@@ -26,5 +26,10 @@ def commands():
 	# add a list of commands here
 	yield from bot.say("!commands, !test")
 
+@bot.command(pass_context = True)
+@asyncio.coroutine
+def echo(ctx, *, echo: str):
+	yield from bot.delete_message(ctx.message)
+	yield from bot.say(":slight_smile: " + echo)
 
 bot.run(config.token)
