@@ -32,4 +32,13 @@ def echo(ctx, *, echo: str):
 	yield from bot.delete_message(ctx.message)
 	yield from bot.say(":slight_smile: " + echo + " " + ctx.message.author.mention)
 
+
+@bot.command(pass_context = True)
+@asyncio.coroutine
+def fight(ctx, *, member : discord.Member = None):
+	if member is None:
+		yield from bot.say(ctx.message.author.mention + (": I can't fight "
+ 		"someone unless you tell me who you want to fight!"))
+		return
+
 bot.run(config.token)
