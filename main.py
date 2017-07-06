@@ -8,8 +8,10 @@ import time
 # actual bot itself
 bot = commands.Bot(command_prefix="!")
 fightResponses = ["%s fell to the floor, 'accidentally'. KO >:)",
-                          "Somehow I managed to knockout %s with my :fist:",
-                          "My fists felt like hurt someone... Sorry, %s! :punch:"]
+                  "Somehow I managed to knockout %s with my :fist:",
+		  "%s likes to throwdown... Too bad my fists are made of steel",
+		  "Oops my fist meet %s face",
+                  "My fists felt like hurting someone... Sorry, %s! :punch:"]
 
 
 @bot.async_event
@@ -69,5 +71,12 @@ def fight(ctx, *, member : discord.Member = None):
 		random.seed(time.time())
 		choice = fightResponses[random.randrange(len(fightResponses))] % member.mention
 		yield from bot.say(ctx.message.author.mention + ": " + choice)
+
+@bot.command(pass_context = True)
+@asyncio.coroutine
+def choice(ctx, *, choices: str):
+	choicesArr = choices.split(",")
+	chosen = choicesArr[random.randrange(len(choicesArr))]
+	yield from bot.say(ctx.message.author.mention + ": I choose " + chosen)
 
 bot.run(config.token)
