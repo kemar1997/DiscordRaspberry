@@ -44,6 +44,20 @@ def fight(ctx, *, member : discord.Member = None):
 	if member.id == "330239386526679040":
 		yield from bot.say(ctx.message.author.mention + (": You can't "
 		"start a fight with me if I start it first :fist:!"))
-	elif member.id == "276233346286092291"
-		yield from bot.say(ctx
+
+	# checks if the bot is trying to fight me and I am sending the message
+	elif member.id == "276233346286092291" and member.id == ctx.message.author.mention:
+		yield from bot.say(ctx.message.author.mention + ": Are you sure "
+		"my creator?"))
+
+	# checks if the bot is trying to fight me but I am not sending the message
+	elif member.id == "276233346286092291":
+		yield from bot.say(ctx.message.author.mention + (": Why must "
+		"I fight with my creator?... He is the best."))
+
+	# checks if someone else calls the fight command on themselves
+	elif member.id == ctx.message.author:
+		yield from bot.say(ctx.message.author.mention + (": Why do "
+		"you want me to fight with you?"
+
 bot.run(config.token)
