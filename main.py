@@ -2,6 +2,8 @@ import discord
 import config
 from discord.ext import commands
 import asyncio
+import random
+import time
 
 # actual bot itself
 bot = commands.Bot(command_prefix="!")
@@ -19,6 +21,9 @@ def on_ready():
 @asyncio.coroutine
 def test():
 	yield from bot.say("Testing... Testing?")
+	fightResponses = ["%s fell to the floor, 'accidentally'. KO >:)",
+			  "Somehow I managed to knockout %s with my :fist:",
+			  "My fists felt like hurt someone... Sorry, %s! :punch:"]
 
 @bot.command()
 @asyncio.coroutine
@@ -59,5 +64,10 @@ def fight(ctx, *, member : discord.Member = None):
 	elif member.id == ctx.message.author:
 		yield from bot.say(ctx.message.author.mention + (": Why do "
 		"you want me to fight with you?"
+	
+	else:
+		random.seed(time.time())
+		choice = fightResponses [random.randrange(len(fightResponses))] % member.mention
+		yield from bot.say(ctx.message.author.mention + ": " + choice)
 
 bot.run(config.token)
