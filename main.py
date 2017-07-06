@@ -41,4 +41,9 @@ def fight(ctx, *, member : discord.Member = None):
  		"someone unless you tell me who you want to fight!"))
 		return
 
+	if member.id == "330239386526679040":
+		yield from bot.say(ctx.message.author.mention + (": You can't "
+		"start a fight with me if I start it first :fist:!"))
+	elif member.id == "276233346286092291"
+		yield from bot.say(ctx
 bot.run(config.token)
