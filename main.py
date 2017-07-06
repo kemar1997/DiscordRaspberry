@@ -7,6 +7,9 @@ import time
 
 # actual bot itself
 bot = commands.Bot(command_prefix="!")
+fightResponses = ["%s fell to the floor, 'accidentally'. KO >:)",
+                          "Somehow I managed to knockout %s with my :fist:",
+                          "My fists felt like hurt someone... Sorry, %s! :punch:"]
 
 
 @bot.async_event
@@ -21,15 +24,12 @@ def on_ready():
 @asyncio.coroutine
 def test():
 	yield from bot.say("Testing... Testing?")
-	fightResponses = ["%s fell to the floor, 'accidentally'. KO >:)",
-			  "Somehow I managed to knockout %s with my :fist:",
-			  "My fists felt like hurt someone... Sorry, %s! :punch:"]
 
 @bot.command()
 @asyncio.coroutine
 def commands():
 	# add a list of commands here
-	yield from bot.say("!commands, !test")
+	yield from bot.say("!commands, !test, !echo (this command requires a string), !fight")
 
 @bot.command(pass_context = True)
 @asyncio.coroutine
@@ -51,8 +51,8 @@ def fight(ctx, *, member : discord.Member = None):
 		"start a fight with me if I start it first :fist:!"))
 
 	# checks if the bot is trying to fight me and I am sending the message
-	elif member.id == "276233346286092291" and member.id == ctx.message.author.mention:
-		yield from bot.say(ctx.message.author.mention + ": Are you sure "
+	elif member.id == "276233346286092291" and member.id == ctx.message.author.id:
+		yield from bot.say(ctx.message.author.mention + (": Are you sure "
 		"my creator?"))
 
 	# checks if the bot is trying to fight me but I am not sending the message
@@ -63,11 +63,11 @@ def fight(ctx, *, member : discord.Member = None):
 	# checks if someone else calls the fight command on themselves
 	elif member.id == ctx.message.author:
 		yield from bot.say(ctx.message.author.mention + (": Why do "
-		"you want me to fight with you?"
-	
+		"you want me to fight with you?"))
+
 	else:
 		random.seed(time.time())
-		choice = fightResponses [random.randrange(len(fightResponses))] % member.mention
+		choice = fightResponses[random.randrange(len(fightResponses))] % member.mention
 		yield from bot.say(ctx.message.author.mention + ": " + choice)
 
 bot.run(config.token)
