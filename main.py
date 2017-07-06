@@ -30,6 +30,6 @@ def commands():
 @asyncio.coroutine
 def echo(ctx, *, echo: str):
 	yield from bot.delete_message(ctx.message)
-	yield from bot.say(":slight_smile: " + echo)
+	yield from bot.say(":slight_smile: " + echo + " " + ctx.message.author.mention)
 
 bot.run(config.token)
