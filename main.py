@@ -93,6 +93,12 @@ def slave(ctx):
 @bot.command(pass_context = True)
 @asyncio.coroutine
 def noslave(ctx):
-	
+	for member in ctx.message.server.members:
+		try:
+			yield from bot.change_nickname(member, member.name)
+		except discord.errors.Forbidden:
+			pass
+	yield from bot.say(ctx.message.author.mention + ": Everyone's name has "
+			   "been restored.")
 
 bot.run(config.token)
