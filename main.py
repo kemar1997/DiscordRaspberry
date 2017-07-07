@@ -79,4 +79,20 @@ def choice(ctx, *, choices: str):
 	chosen = choicesArr[random.randrange(len(choicesArr))]
 	yield from bot.say(ctx.message.author.mention + ": I choose " + chosen)
 
+@bot.command(pass_context = True)
+@asyncio.coroutine
+def slave(ctx):
+	for member in ctx.message.server.members:
+		try:
+			yield from bot.change_nickname(member, "DRslave " + member.name)
+		except discord.errors.Forbidden:
+			pass
+	yield from bot.say(ctx.message.author.mention + ": Everyone is now a "
+			   "slave of DiscordRaspberry!! :smirk_cat:")
+
+@bot.command(pass_context = True)
+@asyncio.coroutine
+def noslave(ctx):
+	
+
 bot.run(config.token)
