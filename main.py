@@ -31,7 +31,11 @@ def test():
 @asyncio.coroutine
 def commands():
 	# add a list of commands here
-	yield from bot.say("!commands, !test, !echo (this command requires a string), !fight")
+	yield from bot.say("!commands, !test, !echo (this command requires a "
+			   "string), !fight, !slave (this command gives users a "
+			   "temporary nickname), !noslave (undoes the last command "
+			   "), !choice (takes any amount of parameters seperated  "
+			   "by commas)")
 
 @bot.command(pass_context = True)
 @asyncio.coroutine
