@@ -13,6 +13,7 @@ fightResponses = ["%s fell to the floor, 'accidentally'. KO >:)",
 		  "Oops my fist meet %s face",
                   "My fists felt like hurting someone... Sorry, %s! :punch:"]
 
+commandsList = []
 
 @bot.async_event
 def on_ready():
@@ -35,7 +36,8 @@ def commands():
 			   "string), !fight, !slave (this command gives users a "
 			   "temporary nickname), !noslave (undoes the last command "
 			   "), !choice (takes any amount of parameters seperated  "
-			   "by commas)")
+			   "by commas), !hellotts (is a text-to-speech command "
+			   "with a custom message)")
 
 @bot.command(pass_context = True)
 @asyncio.coroutine
