@@ -105,12 +105,12 @@ def noslave(ctx):
 	yield from bot.say(ctx.message.author.mention + ": Everyone's name has "
 			   "been restored.")
 # still in development
-@bot.command()
+@bot.command(pass_context = True)
 @asyncio.coroutine
-def hellotts(*, message: str):
-	yield from bot.send_message(message.channel, 'Hello, everyone... I am '
-				    'DiscordRaspberry. And, my creator is Kemar!',
-				    tts=True)
+def hellotts(ctx):
+	yield from bot.send_message(ctx.message.channel, 'Hello, everyone... I am '
+				    'DiscordRaspberry. And, my creator is Kemar', 
+				    tts = True)
 
 
 bot.run(config.token)
