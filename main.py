@@ -13,7 +13,16 @@ fightResponses = ["%s fell to the floor, 'accidentally'. KO >:)",
 		  "Oops my fist meet %s face",
                   "My fists felt like hurting someone... Sorry, %s! :punch:"]
 
-commandsList = []
+commandsList = [
+   '!commands',
+   '!test',
+   '!hellotts (sends a custom text-to-speech message)'
+   '!echo (this command requires a string)',
+   '!fight',
+   '!slave (this command requires a string)',
+   '!noslave',
+   '!choice (chooses from a comma-delimited list)'
+]
 
 @bot.async_event
 def on_ready():
@@ -32,12 +41,7 @@ def test():
 @asyncio.coroutine
 def commands():
 	# add a list of commands here
-	yield from bot.say("!commands, !test, !echo (this command requires a "
-			   "string), !fight, !slave (this command gives users a "
-			   "temporary nickname), !noslave (undoes the last command "
-			   "), !choice (takes any amount of parameters seperated  "
-			   "by commas), !hellotts (is a text-to-speech command "
-			   "with a custom message)")
+	yield from bot.say(' '.join(commandsList))
 
 @bot.command(pass_context = True)
 @asyncio.coroutine
@@ -106,7 +110,8 @@ def noslave(ctx):
 			pass
 	yield from bot.say(ctx.message.author.mention + ": Everyone's name has "
 			   "been restored.")
-# still in development
+
+# worked out the problem just by passing ctx into the function
 @bot.command(pass_context = True)
 @asyncio.coroutine
 def hellotts(ctx):
