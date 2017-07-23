@@ -14,6 +14,7 @@ fightResponses = ["%s fell to the floor, 'accidentally'. KO >:)",
                   "My fists felt like hurting someone... Sorry, %s! :punch:"]
 
 commandsList = [
+   '!doc (github page)',
    '!commands',
    '!test',
    '!hellotts (sends a custom text-to-speech message)',
