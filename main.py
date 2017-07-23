@@ -16,7 +16,7 @@ fightResponses = ["%s fell to the floor, 'accidentally'. KO >:)",
 commandsList = [
    '!commands',
    '!test',
-   '!hellotts (sends a custom text-to-speech message)'
+   '!hellotts (sends a custom text-to-speech message)',
    '!echo (this command requires a string)',
    '!fight',
    '!slave (this command requires a string)',
@@ -39,6 +39,12 @@ def test():
 
 @bot.command()
 @asyncio.coroutine
+def doc():
+	git_url = "https://github.com/kemar1997/DiscordRaspberry"
+	yield from bot.say("My main code is on this github page: " + git_url)
+
+@bot.command()
+@asyncio.coroutine
 def commands():
 	# add a list of commands here
 	yield from bot.say(' '.join(commandsList))
@@ -48,7 +54,6 @@ def commands():
 def echo(ctx, *, echo: str):
 	yield from bot.delete_message(ctx.message)
 	yield from bot.say(":slight_smile: " + echo + " " + ctx.message.author.mention)
-
 
 @bot.command(pass_context = True)
 @asyncio.coroutine
