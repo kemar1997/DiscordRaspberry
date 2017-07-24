@@ -32,6 +32,38 @@ def on_ready():
 	print(bot.user.id)
 	print("------------")
 
+@bot.async_event
+def on_message(message):
+	# stops the bot from replying to itself
+	if message.author == bot.user:
+		return
+	
+	if message.content.startswith('!guess'):
+		yield from bot.send_message(message.channel, 'Guess a number 1 to 100')
+		
+		def guess_check(m):
+			return m.content.isdigit()
+
+		guess = yield from client.wait_for_message(timeout=5.0, author=message.author, check=guess_check)
+		answer = random.randint(1, 100)
+
+		if guess is None:
+            		fmt = 'Sorry, you took too long. It was {}.'
+            		yield from client.send_message(message.channel, fmt.format(answer))
+			return
+		if int(guess.content) == answer:
+            		yield from client.send_message(message.channel, 'You are right!')
+        	else:
+			yield from client.send_message(message.channel, 'Sorry. It is actually {}.'.format(answer))
+
+
+# Welcomes new members to a server
+@bot.async_event
+def on_member_join(member):
+	server = member.server
+	msg = 'Hello World! {0.mention}, Welcome to {1.name}!'
+	yield from bot.send_message(server, msg.format(member, server))
+
 # some custom commands
 @bot.command()
 @asyncio.coroutine
@@ -124,6 +156,5 @@ def hellotts(ctx):
 	yield from bot.send_message(ctx.message.channel, 'Hello, everyone... I am '
 				    'DiscordRaspberry. And, my creator is Kemar', 
 				    tts = True)
-
 
 bot.run(config.token)
