@@ -3,6 +3,7 @@ import config
 from discord.ext import commands
 import asyncio
 import random
+# import schedule
 import time
 
 # actual bot itself
@@ -22,7 +23,9 @@ commandsList = [
    '!fight',
    '!slave (this command requires a string)',
    '!noslave',
-   '!choice (chooses from a comma-delimited list)'
+   '!choice (chooses from a comma-delimited list)',
+   '!guess (starts a small number guessing game)',
+   '!doc (link to github repo)'
 ]
 
 @bot.async_event
@@ -44,17 +47,17 @@ def on_message(message):
 		def guess_check(m):
 			return m.content.isdigit()
 
-		guess = yield from client.wait_for_message(timeout=5.0, author=message.author, check=guess_check)
+		guess = yield from bot.wait_for_message(timeout=12.0, author=message.author, check=guess_check)
 		answer = random.randint(1, 100)
 
 		if guess is None:
-            		fmt = 'Sorry, you took too long. It was {}.'
-            		yield from client.send_message(message.channel, fmt.format(answer))
+			fmt = 'Sorry, you took too long. It was {}.'
+			yield from bot.send_message(message.channel, fmt.format(answer))
 			return
 		if int(guess.content) == answer:
-            		yield from client.send_message(message.channel, 'You are right!')
-        	else:
-			yield from client.send_message(message.channel, 'Sorry. It is actually {}.'.format(answer))
+			yield from bot.send_message(message.channel, 'You are right!')
+		else:
+			yield from bot.send_message(message.channel, 'Sorry. It is actually {}.'.format(answer))
 
 
 # Welcomes new members to a server
@@ -154,7 +157,23 @@ def noslave(ctx):
 @asyncio.coroutine
 def hellotts(ctx):
 	yield from bot.send_message(ctx.message.channel, 'Hello, everyone... I am '
-				    'DiscordRaspberry. And, my creator is Kemar', 
+				    'DiscordBerry. And, my creator is Kemar', 
 				    tts = True)
 
+# @bot.command(pass_context = True)
+# @bot.async_event
+# def auto(ctx):
+#	yield from bot.send_message(ctx.message.channel, "I am DiscordBerry, "
+#				    "feel free to use my commands by using "
+#				    "!commands to see the other commands I "
+#				    "I have to offer.")
+
+# Event handler to automate the message
+
+# schedule.every().hour.do(auto)
+
+# while True:
+#	schedule.run_pending()
+#	time.sleep(1)
+	
 bot.run(config.token)
